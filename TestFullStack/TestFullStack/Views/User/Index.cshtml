@@ -1,0 +1,128 @@
+﻿@model List<Test.Domain.Entities.Question>
+@{
+    ViewData["Title"] = "User Test";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #1e1e2f;
+        color: #ffffff;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #f0f0f0;
+    }
+
+    #timer {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: rgba(0,0,0,0.3);
+        border-radius: 12px;
+    }
+
+    .question-box {
+        background-color: rgba(0,0,0,0.4);
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .option {
+        margin: 8px 0;
+    }
+
+    input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    button {
+        padding: 12px 25px;
+        border-radius: 10px;
+        border: none;
+        background-color: #6a11cb;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: background 0.3s;
+    }
+
+        button:hover {
+            background-color: #8e2de2;
+        }
+
+    .result {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 30px;
+        padding: 15px;
+        background-color: rgba(0,0,0,0.5);
+        border-radius: 12px;
+    }
+</style>
+
+<div class="container">
+    <h2>User Test</h2>
+
+    <div id="timer">Qolgan vaqt: <span id="time">10:00</span></div>
+
+    <form asp-action="Submit" method="post" id="quizForm">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var q = Model[i];
+            <div class="question-box">
+                <p><strong>@(i + 1). @q.QuestionText</strong></p>
+                @foreach (var o in q.Options)
+                {
+                    <div class="option">
+                        <input type="radio" name="answers[@q.Id]" value="@o.Id" required /> @o.Text
+                    </div>
+                }
+            </div>
+        }
+        <button type="submit">Yakunlash</button>
+    </form>
+
+    @if (ViewBag.Score != null)
+    {
+        <div class="result">
+            Your score: @ViewBag.Score / @ViewBag.Total
+        </div>
+    }
+</div>
+
+<script>
+    // Timer logic: 10 minutes
+    let totalSeconds = 10 * 60;
+    const timeDisplay = document.getElementById("time");
+    const form = document.getElementById("quizForm");
+
+    function updateTimer() {
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        timeDisplay.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        totalSeconds--;
+
+        if(totalSeconds < 0) {
+            clearInterval(timerInterval);
+            alert("Vaqt tugadi! Javoblaringiz tekshirilmoqda...");
+            form.submit();
+        }
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+</script>

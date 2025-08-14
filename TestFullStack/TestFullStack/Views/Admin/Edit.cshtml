@@ -1,0 +1,71 @@
+﻿@model Test.Domain.Entities.Question
+@{
+    ViewData["Title"] = "Savolni Tahrirlash";
+}
+
+<style>
+    body {
+        background-color: #1e1e2f;
+        color: #fff;
+        font-family: 'Segoe UI';
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background-color: #2c2c3e;
+        border-radius: 15px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border: none;
+        background-color: #3a3a50;
+        color: #fff;
+    }
+
+    button {
+        padding: 12px 25px;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(90deg, #6a11cb, #8e2de2);
+        color: #fff;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background: linear-gradient(90deg, #8e2de2, #a64de0);
+        }
+</style>
+
+<div class="container">
+    <h2>Edit Question</h2>
+    @if (ViewBag.Error != null)
+    {
+        <div style="color:#ff6b6b">@ViewBag.Error</div>
+    }
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="text" name="questionText" value="@Model.QuestionText" placeholder="Savol matni" required />
+
+        @for (int i = 0; i < Model.Options.Count; i++)
+        {
+            <input type="text" name="options[@i]" value="@Model.Options[i].Text" placeholder="Javob @(i+1)" required />
+        }
+
+        @for (int i = Model.Options.Count; i < 3; i++)
+        {
+            <input type="text" name="options[@i]" placeholder="@(i+1)-Javob" />
+        }
+
+        <input type="number" name="correctIndex" value="@Model.Options.FindIndex(o => o.IsCorrect)" placeholder="(0 - 3) bo'lgan to'g'ri javobni tanlang" required />
+
+        <button type="submit">Update</button>
+    </form>
+</div>

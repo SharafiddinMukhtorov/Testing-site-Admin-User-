@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1e1e2f; /* Darkmode fon */
+    }
+
+    .login-container {
+        background-color: rgba(40, 42, 54, 0.85);
+        backdrop-filter: blur(10px);
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 400px; /* Maksimal kenglik */
+        width: 90%; /* Mobil uchun moslashuvchan */
+        text-align: center;
+        margin: 0 auto; /* Horizontal markazlash */
+    }
+
+        .login-container h2 {
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+    .login-input {
+        width: 100%;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+        .login-input::placeholder {
+            color: #ccc;
+        }
+
+    .login-button {
+        width: 100%;
+        padding: 15px 20px;
+        border-radius: 15px;
+        border: none;
+        font-size: 18px;
+        background: linear-gradient(315deg, #6a11cb 0%, #2575fc 100%);
+        color: #fff;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .login-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+        }
+
+    .error-message {
+        color: #ff6b6b;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="error-message">@ViewBag.Error</div>
+    }
+
+    <form asp-action="Index" method="post">
+        <input type="text" name="username" placeholder="Enter username (admin/user)" class="login-input" />
+        <button type="submit" class="login-button">Login</button>
+    </form>
+</div>
