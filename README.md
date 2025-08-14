@@ -16,7 +16,7 @@ Admin panel orqali test savollarini **qo‘shish**, **tahrirlash**, **o‘chiris
 
 - **ASP.NET Core MVC** — backend va UI uchun
 - **Entity Framework Core** — ma’lumotlar bazasi bilan ishlash uchun
-- **SQL Server** — ma’lumotlarni saqlash
+- **Postgre Sql** — ma’lumotlarni saqlash
 - **Dependency Injection** — service’larni ulash
 - **Clean Architecture** — qatlamlarga bo‘lingan kod tuzilmasi
 
